@@ -37,11 +37,11 @@ public class RemoteDubboInterfaceAndMethodParser {
     ConcurrentMap<String, Map<String, URL>> providerUrls = null;
     String zkAd = "zk.beta.corp.qunar.com:2181";
 
-    public Object doParser(RemoteParserParam parserParam) {
+    public List<String> doParser(RemoteParserParam parserParam) {
         ReferenceConfig reference = new ReferenceConfig();
         reference.setApplication(application);
 
-        String protocol = parserParam.getRpcProtocol();
+        String protocol = parserParam.getRegistryProtocol();
         String group = parserParam.getDubboGroup();
         String address = parserParam.getZkAddress();
 

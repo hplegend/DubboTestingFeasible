@@ -13,51 +13,101 @@ public class RemoteParserParam {
 
     private String dubboGroup;
 
-    private String rpcProtocol;
+    private String registryProtocol;
 
     private String interfaceName;
 
-
     private String dubboVersion;
+
+    private RemoteParserParam() {
+
+    }
+
+
+    /**
+     * 构造者模式
+     */
+    public static class Builder {
+        private String zkAddress;
+
+        private String dubboGroup;
+
+        private String registryProtocol;
+
+        private String interfaceName;
+
+        private String dubboVersion;
+
+
+        private Builder() {
+
+        }
+
+
+        public static Builder builder() {
+            return new Builder();
+
+        }
+
+        public Builder zkAddress(String zkAddress) {
+            this.zkAddress = zkAddress;
+            return this;
+        }
+
+        public Builder dubboGroup(String dubboGroup) {
+            this.dubboGroup = dubboGroup;
+            return this;
+        }
+
+        public Builder registryProtocol(String registryProtocol) {
+            this.registryProtocol = registryProtocol;
+            return this;
+        }
+
+        public Builder interfaceName(String interfaceName) {
+            this.interfaceName = interfaceName;
+            return this;
+        }
+
+        public Builder dubboVersion(String dubboVersion) {
+            this.dubboVersion = dubboVersion;
+            return this;
+        }
+
+
+        public RemoteParserParam build() {
+            RemoteParserParam var = new RemoteParserParam();
+            var.zkAddress = this.zkAddress;
+            var.dubboGroup = this.dubboGroup;
+            var.registryProtocol = this.registryProtocol;
+            var.interfaceName = this.interfaceName;
+            var.dubboGroup = this.dubboGroup;
+
+            return var;
+        }
+    }
+
+
+    public String getDubboGroup() {
+        return dubboGroup;
+    }
+
+
+    public String getRegistryProtocol() {
+        return registryProtocol;
+    }
 
 
     public String getZkAddress() {
         return zkAddress;
     }
 
-    public void setZkAddress(String zkAddress) {
-        this.zkAddress = zkAddress;
-    }
-
-    public String getDubboGroup() {
-        return dubboGroup;
-    }
-
-    public void setDubboGroup(String dubboGroup) {
-        this.dubboGroup = dubboGroup;
-    }
-
-    public String getRpcProtocol() {
-        return rpcProtocol;
-    }
-
-    public void setRpcProtocol(String rpcProtocol) {
-        this.rpcProtocol = rpcProtocol;
-    }
 
     public String getInterfaceName() {
         return interfaceName;
     }
 
-    public void setInterfaceName(String interfaceName) {
-        this.interfaceName = interfaceName;
-    }
-
     public String getDubboVersion() {
         return dubboVersion;
-    }
-
-    public void setDubboVersion(String dubboVersion) {
-        this.dubboVersion = dubboVersion;
     }
 }
