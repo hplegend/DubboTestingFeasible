@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 开启CGLIB代理切面支持 -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <context:property-placeholder location="classpath:jdbc.properties" ignore-unresolvable="true"/>
+
+    <!-- 开启CGLIB代理切面支持 -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <bean id="datasourceMaster" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="org.postgresql.Driver"/>
+        <property name="url" value="${master.url}"/>
+        <property name="username" value="${master.user}"/>
+        <property name="password" value="${master.pwd}"/>
+        <property name="initialSize" value="10"/>
+        <property name="maxActive" value="10"/>
+        <property name="maxWait" value="1000"/>
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="defaultAutoCommit" value="true"/>
+        <property name="filters" value="stat"/>
+        <property name="testWhileIdle" value="false"/>
+    </bean>
+    <!-- 从库 -->
+    <bean id="datasourceSlave" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="org.postgresql.Driver"/>
+        <property name="url" value="${slave.url}"/>
+        <property name="username" value="${slave.user}"/>
+        <property name="password" value="${slave.pwd}"/>
+        <property name="initialSize" value="10"/>
+        <property name="maxActive" value="10"/>
+        <property name="maxWait" value="1000"/>
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="defaultAutoCommit" value="true"/>
+        <property name="filters" value="stat"/>
+        <property name="testWhileIdle" value="false"/>
+    </bean>
+
+
+    <!-- 动态数据源 -->
+    <bean id="dataSource" class="com.hepeng.controller.jdbc.DynamicDataSourceRoute">
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <entry key="master" value-ref="datasourceMaster"/>
+                <entry key="slave" value-ref="datasourceSlave"/>
+            </map>
+        </property>
+        <property name="defaultTargetDataSource" ref="datasourceMaster"/>
+    </bean>
+
+
+    <!-- 连接数据库的session -->
+    <bean id="sqlSessionFactory" class="com.hepeng.controller.jdbc.FailFastSqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis.xml"/>
+        <property name="mapperLocations">
+            <list>
+                <value>classpath:mapper/*.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- mybatis sql模版 -->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" primary="true">
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
+    </bean>
+
+    <!-- mybatis接口扫描 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.hepeng"/>
+        <property name="annotationClass" value="org.springframework.stereotype.Repository" />
+    </bean>
+
+    <!-- 设置Druid慢查询标准 -->
+    <bean id="stat_filter" class="com.alibaba.druid.filter.stat.StatFilter">
+        <property name="slowSqlMillis" value="3000"/>
+        <property name="logSlowSql" value="true"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:int-kafka="http://www.springframework.org/schema/integration/kafka"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/integration/kafka http://www.springframework.org/schema/integration/kafka/spring-integration-kafka.xsd
+        http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:kafka.properties" ignore-unresolvable="true" />
+
+    <!-- 这里的Encoder在下面没有用到 删掉也可以  Encoder和Serializer只用设置一个就行了。
+    consumer.xml中的配置也是一样 -->
+    <!-- <bean id="kafkaEncoder"
+        class="org.springframework.integration.kafka.serializer.avro.AvroReflectDatumBackedKafkaEncoder">
+        <constructor-arg value="com.kafka.demo.util.ObjectEncoder" />
+    </bean> -->
+    <!-- 生产者一些配置属性。不配置按默认执行 -->
+    <bean id="producerProperties"
+          class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="properties">
+            <props>
+                <prop key="topic.metadata.refresh.interval.ms">3600000</prop>
+                <prop key="message.send.max.retries">1</prop>
+                <!-- <prop key="serializer.class">com.kafka.demo.util.ObjectEncoder</prop> -->
+                <prop key="request.required.acks">1</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- 生产者通过这个频道传送消息  基于queue-->
+    <int:channel id="kafkaProducerChannel">
+        <int:queue />
+    </int:channel>
+
+    <!-- 生产者发送消息设置  频道+方法配置 -->
+    <int-kafka:outbound-channel-adapter
+            id="kafkaOutboundChannelAdapterTopic" kafka-producer-context-ref="producerContextTopic"
+            auto-startup="true" channel="kafkaProducerChannel" order="3">
+        <int:poller fixed-delay="1000" time-unit="MILLISECONDS"
+                    receive-timeout="1" task-executor="taskExecutor" />
+    </int-kafka:outbound-channel-adapter>
+    <task:executor id="taskExecutor" pool-size="5"
+                   keep-alive="120" queue-capacity="500" />
+
+
+    <bean id="kafkaStringEncoder" class="org.springframework.integration.kafka.serializer.common.StringEncoder">
+        <property name="encoding" value="UTF-8"/>
+    </bean>
+
+    <!-- 消息发送的主题设置。必须设置了主题才能发送相应主题消息 -->
+    <int-kafka:producer-context id="producerContextTopic"
+                                producer-properties="producerProperties">
+        <int-kafka:producer-configurations>
+            <!-- 多个topic配置  broker-list kafaka服务
+            key_serializer  value-serializer 就是用了自己的编码格式
+            value-class-type 指定发送消息的类型-->
+            <int-kafka:producer-configuration
+                    broker-list="${kafka.producer.broker.list}" key-encoder="kafkaStringEncoder"
+                    value-class-type="java.lang.Object" value-encoder="kafkaStringEncoder"
+                    topic="${kafka.producer.topic}" />
+            <!--<int-kafka:producer-configuration
+                    broker-list="192.168.1.5:9091" key-serializer="stringSerializer"
+                    value-class-type="java.lang.Object" value-serializer="stringSerializer"
+                    topic="myTopic" />-->
+        </int-kafka:producer-configurations>
+    </int-kafka:producer-context>
+</beans>
