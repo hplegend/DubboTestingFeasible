@@ -37,7 +37,7 @@ public class RemoteDubboInterfaceAndMethodParser {
     ConcurrentMap<String, Map<String, URL>> providerUrls = null;
     String zkAd = "zk.beta.corp.qunar.com:2181";
 
-    public List<String> doParser(RemoteParserParam parserParam) {
+    public List<String> doParser(RemoteParserParam parserParam) throws Exception {
         ReferenceConfig reference = new ReferenceConfig();
         reference.setApplication(application);
 
@@ -59,6 +59,8 @@ public class RemoteDubboInterfaceAndMethodParser {
                 registry.setAddress(address);
                 reference.setRegistry(registry);
                 break;
+            default:
+                throw new Exception("不支持的分布式注册协议");
         }
         reference.setInterface("org.apache.dubbo.registry.RegistryService");
         try {
@@ -93,8 +95,5 @@ public class RemoteDubboInterfaceAndMethodParser {
             log.error("get provider list is error!", e);
             throw new RuntimeException("Can't get the interface list, please check if the address is wrong!", e);
         }
-
     }
-
-
 }
