@@ -1,13 +1,20 @@
-package com.hplegend.dubbo;
+package com.hplegend.dubbo.parse;
 
 import com.google.common.collect.Lists;
+import com.hplegend.dubbo.common.MethodArgument;
+import com.hplegend.dubbo.common.RegistryServerSync;
+import com.hplegend.dubbo.common.RemoteParserParam;
 import com.hplegend.dubbo.constant.Constants;
+import com.hplegend.dubbo.utils.ClassUtils;
 import org.apache.dubbo.common.URL;
+import org.apache.dubbo.common.utils.StringUtils;
 import org.apache.dubbo.config.ApplicationConfig;
 import org.apache.dubbo.config.ReferenceConfig;
 import org.apache.dubbo.config.RegistryConfig;
 import org.apache.dubbo.config.utils.ReferenceConfigCache;
 import org.apache.dubbo.registry.RegistryService;
+import org.apache.dubbo.rpc.RpcContext;
+import org.apache.dubbo.rpc.service.GenericService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,36 +22,38 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
+import java.util.stream.Collectors;
 
 /**
+ * 远程的dubbo解析解析
+ *
  * @author hp.he
- * @date 2019/9/26 16:37
+ * @date 2019/9/27 19:16
  */
-
-public class ProviderService {
+public class RemoteDubboInterfaceAndMethodParser {
 
     private static final Logger log = LoggerFactory.getLogger("dfsd");
     public static ApplicationConfig application = new ApplicationConfig("hplegendDubboTest");
-
-
     ConcurrentMap<String, Map<String, URL>> providerUrls = null;
+    String zkAd = "zk.beta.corp.qunar.com:2181";
 
-    // 根据 协议，zk，group，application等获取暴露出来的dubbo接口
-    public List<String> getExpodeMethods(String protocol, String address, String group) {
+    public Object doParser(RemoteParserParam parserParam) {
         ReferenceConfig reference = new ReferenceConfig();
         reference.setApplication(application);
 
-        RegistryConfig registry = null;
+        String protocol = parserParam.getRpcProtocol();
+        String group = parserParam.getDubboGroup();
+        String address = parserParam.getZkAddress();
+
+        RegistryConfig registry = new RegistryConfig();
         switch (protocol) {
             case Constants.REGISTRY_ZOOKEEPER:
-                registry = new RegistryConfig();
                 registry.setProtocol(Constants.REGISTRY_ZOOKEEPER);
                 registry.setGroup(group);
                 registry.setAddress(address);
                 reference.setRegistry(registry);
                 break;
             case Constants.REGISTRY_REDIS:
-                registry = new RegistryConfig();
                 registry.setProtocol(Constants.REGISTRY_REDIS);
                 registry.setGroup(group);
                 registry.setAddress(address);
@@ -75,7 +84,7 @@ public class ProviderService {
 
             List<String> interfaceAndMethodExpand = Lists.newArrayList();
             for (Map.Entry<String, Map<String, URL>> entry : providerUrls.entrySet()) {
-                for (Map.Entry<String,URL> innerEntry: entry.getValue().entrySet()) {
+                for (Map.Entry<String, URL> innerEntry : entry.getValue().entrySet()) {
                     interfaceAndMethodExpand.add(entry.getKey() + "*" + innerEntry.getValue().getParameter(com.alibaba.dubbo.common.Constants.METHODS_KEY));
                 }
             }
@@ -86,4 +95,6 @@ public class ProviderService {
         }
 
     }
+
+
 }

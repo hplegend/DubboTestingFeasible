@@ -1,4 +1,4 @@
-package com.hplegend.dubbo;
+package com.hplegend.dubbo.common;
 
 import com.hplegend.dubbo.utils.JsonUtils;
 import org.springframework.util.StringUtils;

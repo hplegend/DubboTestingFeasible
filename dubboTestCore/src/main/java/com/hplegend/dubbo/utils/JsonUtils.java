@@ -9,12 +9,13 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Type;
 
 /**
+ * json 工具
  * @author hp.he
  * @date 2019/9/26 19:56
  */
 public class JsonUtils {
 
-    private static final Logger logger = LoggerFactory.getLogger("sd");
+    private static final Logger logger = LoggerFactory.getLogger(JsonUtils.class.getName());
 
     private static final Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd HH:mm:ss")

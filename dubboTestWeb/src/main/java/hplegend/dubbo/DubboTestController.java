@@ -1,7 +1,7 @@
 package hplegend.dubbo;
 
-import com.hplegend.dubbo.DubboCallService;
-import com.hplegend.dubbo.ProviderService;
+import com.hplegend.dubbo.executor.DubboCallService;
+import com.hplegend.dubbo.parse.ProviderService;
 import com.hplegend.dubbo.utils.JsonUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

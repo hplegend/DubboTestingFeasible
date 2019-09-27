@@ -1,4 +1,4 @@
-package com.hplegend.dubbo;
+package com.hplegend.dubbo.common;
 
 /**
  * @author hp.he

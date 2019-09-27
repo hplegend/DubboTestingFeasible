@@ -1,5 +1,6 @@
-package com.hplegend.dubbo;
+package com.hplegend.dubbo.executor;
 
+import com.hplegend.dubbo.common.MethodArgument;
 import com.hplegend.dubbo.constant.Constants;
 import com.hplegend.dubbo.utils.ClassUtils;
 import org.apache.dubbo.common.utils.StringUtils;

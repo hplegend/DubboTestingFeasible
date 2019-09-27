@@ -1,7 +1,7 @@
 package com.hplegend.dubbo.utils;
 
 import com.google.common.reflect.TypeToken;
-import com.hplegend.dubbo.MethodArgument;
+import com.hplegend.dubbo.common.MethodArgument;
 import com.hplegend.dubbo.constant.Constants;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class ClassUtils {
 
-    private static final Logger log = LoggerFactory.getLogger("");
+    private static final Logger log = LoggerFactory.getLogger(ClassUtils.class.getName());
 
     private static final String TYPE_NAME_PREFIX = "class ";
 
