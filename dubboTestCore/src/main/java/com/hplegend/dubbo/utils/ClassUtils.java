@@ -2,6 +2,7 @@ package com.hplegend.dubbo.utils;
 
 import com.google.common.reflect.TypeToken;
 import com.hplegend.dubbo.common.MethodArgument;
+import com.hplegend.dubbo.common.MethodArgumentAndValue;
 import com.hplegend.dubbo.constant.Constants;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -62,148 +63,148 @@ public class ClassUtils {
 
     @SuppressWarnings("serial")
     public static void parseParameter(List<String> paramterTypeList,
-                                      List<Object> parameterValuesList, MethodArgument arg) {
+                                      List<Object> parameterValuesList, MethodArgumentAndValue arg) {
         try {
-            String className = arg.getParamType();
+            String className = arg.getMethodType();
             if ("int".equals(className)) {
-                paramterTypeList.add(arg.getParamType());
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? Constants.INT_DEFAULT : Integer.parseInt(arg.getParamValue()));
+                paramterTypeList.add(arg.getMethodType());
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.INT_DEFAULT : Integer.parseInt(arg.getMethodValue()));
             } else if("int[]".equals(className)) {
-                paramterTypeList.add(arg.getParamType());
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? Constants.INT_ARRAY_DEFAULT : JsonUtils.formJson(arg.getParamValue(), new TypeToken<int[]>() {}.getType()));
+                paramterTypeList.add(arg.getMethodType());
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.INT_ARRAY_DEFAULT : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<int[]>() {}.getType()));
             } else if ("double".equals(className)) {
-                paramterTypeList.add(arg.getParamType());
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? Constants.DOUBLE_DEFAULT : Double.parseDouble(arg.getParamValue()));
+                paramterTypeList.add(arg.getMethodType());
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.DOUBLE_DEFAULT : Double.parseDouble(arg.getMethodValue()));
             }  else if ("double[]".equals(className)) {
-                paramterTypeList.add(arg.getParamType());
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? Constants.DOUBLE_ARRAY_DEFAULT : JsonUtils.formJson(arg.getParamValue(), new TypeToken<double[]>() {}.getType()));
+                paramterTypeList.add(arg.getMethodType());
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.DOUBLE_ARRAY_DEFAULT : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<double[]>() {}.getType()));
             } else if ("short".equals(className)) {
-                paramterTypeList.add(arg.getParamType());
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? Constants.SHORT_DEFAULT : Short.parseShort(arg.getParamValue()));
+                paramterTypeList.add(arg.getMethodType());
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.SHORT_DEFAULT : Short.parseShort(arg.getMethodValue()));
             } else if ("short[]".equals(className)) {
-                paramterTypeList.add(arg.getParamType());
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? Constants.SHORT_ARRAY_DEFAULT : JsonUtils.formJson(arg.getParamValue(), new TypeToken<short[]>() {}.getType()));
+                paramterTypeList.add(arg.getMethodType());
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.SHORT_ARRAY_DEFAULT : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<short[]>() {}.getType()));
             } else if ("float".equals(className)) {
-                paramterTypeList.add(arg.getParamType());
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? Constants.FLOAT_DEFAULT : Float.parseFloat(arg.getParamValue()));
+                paramterTypeList.add(arg.getMethodType());
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.FLOAT_DEFAULT : Float.parseFloat(arg.getMethodValue()));
             } else if ("float[]".equals(className)) {
-                paramterTypeList.add(arg.getParamType());
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? Constants.FLOAT_ARRAY_DEFAULT : JsonUtils.formJson(arg.getParamValue(), new TypeToken<float[]>() {}.getType()));
+                paramterTypeList.add(arg.getMethodType());
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.FLOAT_ARRAY_DEFAULT : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<float[]>() {}.getType()));
             } else if ("long".equals(className)) {
-                paramterTypeList.add(arg.getParamType());
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? Constants.LONG_DEFAULT : Long.parseLong(arg.getParamValue()));
+                paramterTypeList.add(arg.getMethodType());
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.LONG_DEFAULT : Long.parseLong(arg.getMethodValue()));
             } else if ("long[]".equals(className)) {
-                paramterTypeList.add(arg.getParamType());
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? Constants.LONG_ARRAY_DEFAULT : JsonUtils.formJson(arg.getParamValue(), new TypeToken<long[]>() {}.getType()));
+                paramterTypeList.add(arg.getMethodType());
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.LONG_ARRAY_DEFAULT : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<long[]>() {}.getType()));
             } else if ("byte".equals(className)) {
-                paramterTypeList.add(arg.getParamType());
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? Constants.BYTE_DEFAULT : Byte.parseByte(arg.getParamValue()));
+                paramterTypeList.add(arg.getMethodType());
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.BYTE_DEFAULT : Byte.parseByte(arg.getMethodValue()));
             } else if ("byte[]".equals(className)) {
-                paramterTypeList.add(arg.getParamType());
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? Constants.BYTE_ARRAY_DEFAULT : JsonUtils.formJson(arg.getParamValue(), new TypeToken<byte[]>() {}.getType()));
+                paramterTypeList.add(arg.getMethodType());
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.BYTE_ARRAY_DEFAULT : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<byte[]>() {}.getType()));
             } else if ("boolean".equals(className)) {
-                paramterTypeList.add(arg.getParamType());
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? Constants.BOOLEAN_DEFAULT : Boolean.parseBoolean(arg.getParamValue()));
+                paramterTypeList.add(arg.getMethodType());
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.BOOLEAN_DEFAULT : Boolean.parseBoolean(arg.getMethodValue()));
             } else if ("boolean[]".equals(className)) {
-                paramterTypeList.add(arg.getParamType());
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? Constants.BOOLEAN_ARRAY_DEFAULT : JsonUtils.formJson(arg.getParamValue(), new TypeToken<boolean[]>() {}.getType()));
+                paramterTypeList.add(arg.getMethodType());
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.BOOLEAN_ARRAY_DEFAULT : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<boolean[]>() {}.getType()));
             } else if ("char".equals(className)) {
-                paramterTypeList.add(arg.getParamType());
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? Constants.CHAR_DEFAULT : arg.getParamValue().charAt(0));
+                paramterTypeList.add(arg.getMethodType());
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.CHAR_DEFAULT : arg.getMethodValue().charAt(0));
             } else if ("char[]".equals(className)) {
-                paramterTypeList.add(arg.getParamType());
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? Constants.CHAT_ARRAY_DEFAULT : JsonUtils.formJson(arg.getParamValue(), new TypeToken<char[]>() {}.getType()));
+                paramterTypeList.add(arg.getMethodType());
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.CHAT_ARRAY_DEFAULT : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<char[]>() {}.getType()));
             } else if ("java.lang.String".equals(className)
                     || "String".equals(className)
                     || "string".equals(className)) {
                 paramterTypeList.add("java.lang.String");
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? null : String.valueOf(arg.getParamValue()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : String.valueOf(arg.getMethodValue()));
             } else if ("java.lang.String[]".equals(className)
                     || "String[]".equals(className)
                     || "string[]".equals(className)) {
                 paramterTypeList.add("java.lang.String[]");
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? null : JsonUtils.formJson(arg.getParamValue(), new TypeToken<String[]>() {}.getType()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<String[]>() {}.getType()));
             } else if ("java.lang.Integer".equals(className)
                     || "Integer".equals(className)
                     || "integer".equals(className)) {
                 paramterTypeList.add("java.lang.Integer");
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? null : Integer.valueOf(arg.getParamValue()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : Integer.valueOf(arg.getMethodValue()));
             } else if ("java.lang.Integer[]".equals(className)
                     || "Integer[]".equals(className)
                     || "integer[]".equals(className)) {
                 paramterTypeList.add("java.lang.Integer[]");
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? null : JsonUtils.formJson(arg.getParamValue(), new TypeToken<Integer[]>() {}.getType()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<Integer[]>() {}.getType()));
             } else if ("java.lang.Double".equals(className)
                     || "Double".equals(className)) {
                 paramterTypeList.add("java.lang.Double");
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? null : Double.valueOf(arg.getParamValue()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : Double.valueOf(arg.getMethodValue()));
             } else if ("java.lang.Double[]".equals(className)
                     || "Double[]".equals(className)) {
                 paramterTypeList.add("java.lang.Double[]");
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? null : JsonUtils.formJson(arg.getParamValue(), new TypeToken<Double[]>() {}.getType()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<Double[]>() {}.getType()));
             } else if ("java.lang.Short".equals(className)
                     || "Short".equals(className)) {
                 paramterTypeList.add("java.lang.Short");
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? null : Short.valueOf(arg.getParamValue()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : Short.valueOf(arg.getMethodValue()));
             } else if ("java.lang.Short[]".equals(className)
                     || "Short[]".equals(className)) {
                 paramterTypeList.add("java.lang.Short[]");
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? null : JsonUtils.formJson(arg.getParamValue(), new TypeToken<Short[]>() {}.getType()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<Short[]>() {}.getType()));
             } else if ("java.lang.Long".equals(className)
                     || "Long".equals(className)) {
                 paramterTypeList.add("java.lang.Long");
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? null : Long.valueOf(arg.getParamValue()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : Long.valueOf(arg.getMethodValue()));
             } else if("java.lang.Long[]".equals(className)
                     || "Long[]".equals(className)) {
                 paramterTypeList.add("java.lang.Long[]");
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? null : JsonUtils.formJson(arg.getParamValue(), new TypeToken<Long[]>() {}.getType()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<Long[]>() {}.getType()));
             } else if ("java.lang.Float".equals(className)
                     || "Float".equals(className)) {
                 paramterTypeList.add("java.lang.Float");
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? null : Float.valueOf(arg.getParamValue()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : Float.valueOf(arg.getMethodValue()));
             } else if ("java.lang.Float[]".equals(className)
                     || "Float[]".equals(className)) {
                 paramterTypeList.add("java.lang.Float[]");
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? null : JsonUtils.formJson(arg.getParamValue(), new TypeToken<Float[]>() {}.getType()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<Float[]>() {}.getType()));
             } else if ("java.lang.Byte".equals(className)
                     || "Byte".equals(className)) {
                 paramterTypeList.add("java.lang.Byte");
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? null : Byte.valueOf(arg.getParamValue()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : Byte.valueOf(arg.getMethodValue()));
             } else if ("java.lang.Byte[]".equals(className)
                     || "Byte[]".equals(className)) {
                 paramterTypeList.add("java.lang.Byte[]");
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? null : JsonUtils.formJson(arg.getParamValue(), new TypeToken<Byte[]>() {}.getType()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<Byte[]>() {}.getType()));
             } else if ("java.lang.Boolean".equals(className)
                     || "Boolean".equals(className)) {
                 paramterTypeList.add("java.lang.Boolean");
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? null : Boolean.valueOf(arg.getParamValue()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : Boolean.valueOf(arg.getMethodValue()));
             } else if ("java.lang.Boolean[]".equals(className)
                     || "Boolean[]".equals(className)) {
                 paramterTypeList.add("java.lang.Boolean[]");
-                parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? null : JsonUtils.formJson(arg.getParamValue(), new TypeToken<Boolean[]>() {}.getType()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<Boolean[]>() {}.getType()));
             } else {
                 if (className.endsWith("[]")) {
                     List<?> list = null;
-                    if (!StringUtils.isBlank(arg.getParamValue())) {
-                        list = JsonUtils.formJson(arg.getParamValue(), new TypeToken<List<?>>() {}.getType());
+                    if (!StringUtils.isBlank(arg.getMethodValue())) {
+                        list = JsonUtils.formJson(arg.getMethodValue(), new TypeToken<List<?>>() {}.getType());
                     }
-                    paramterTypeList.add(arg.getParamType());
+                    paramterTypeList.add(arg.getMethodType());
                     parameterValuesList.add(list == null ? null : list.toArray());
                 } else {
                     try {
                         Class<?> clazz = Class.forName(className);
-                        paramterTypeList.add(arg.getParamType());
-                        parameterValuesList.add(StringUtils.isBlank(arg.getParamValue()) ? null : JsonUtils.formJson(arg.getParamValue(), clazz));
+                        paramterTypeList.add(arg.getMethodType());
+                        parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), clazz));
                     } catch (ClassNotFoundException e) {
                         //不是jdk或者lib下的类，使用通用map格式反序列化值
-                        paramterTypeList.add(arg.getParamType());
+                        paramterTypeList.add(arg.getMethodType());
                         Object obj = null;
-                        if (!StringUtils.isBlank(arg.getParamValue())) {
+                        if (!StringUtils.isBlank(arg.getMethodValue())) {
                             //使用通用map格式反序列化值
-                            obj = JsonUtils.formJson(arg.getParamValue(), new TypeToken<HashMap<String, Object>>() {}.getType());
+                            obj = JsonUtils.formJson(arg.getMethodValue(), new TypeToken<HashMap<String, Object>>() {}.getType());
                             if (obj == null) {
                                 //枚举类型的类走字符串序列化
-                                obj = JsonUtils.formJson(arg.getParamValue(), String.class);
+                                obj = JsonUtils.formJson(arg.getMethodValue(), String.class);
                             }
                         }
                         parameterValuesList.add(obj);
@@ -211,7 +212,7 @@ public class ClassUtils {
                 }
             }
         } catch (Exception e) {
-            throw new IllegalArgumentException("Invalid parameter => [ParamType="+arg.getParamType()+",ParamValue="+arg.getParamValue()+"]", e);
+            throw new IllegalArgumentException("Invalid parameter => [ParamType="+arg.getMethodValue()+",ParamValue="+arg.getMethodValue()+"]", e);
         }
     }
 }

@@ -18,9 +18,9 @@ public class SimpleDubboTestApiService implements SimpleDubboTestApi, Initializi
     }
 
     @Override
-    public String outputSimpleMessage() {
+    public String outputSimpleMessage(String input) {
         System.out.println("dddd");
-        return "SimpleDubboTestApiService success!";
+        return "SimpleDubboTestApiService success, input" + input;
     }
 
     @Override

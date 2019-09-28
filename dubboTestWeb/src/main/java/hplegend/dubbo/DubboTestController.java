@@ -1,7 +1,10 @@
 package hplegend.dubbo;
 
+import com.hplegend.dubbo.common.DubboInterfaceInvokeParam;
+import com.hplegend.dubbo.common.DubboInterfaceParameters;
+import com.hplegend.dubbo.common.MethodArgumentAndValue;
 import com.hplegend.dubbo.common.RemoteParserParam;
-import com.hplegend.dubbo.executor.DubboCallService;
+import com.hplegend.dubbo.executor.RemoteDubboCallService;
 import com.hplegend.dubbo.parse.RemoteDubboInterfaceAndMethodParser;
 import com.hplegend.dubbo.utils.JsonUtils;
 import org.springframework.http.HttpHeaders;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,7 +35,9 @@ public class DubboTestController {
     public ResponseEntity<String> dubboMethodList(
             @RequestParam("registryProtocol") String registryProtocol,
             @RequestParam("dubboGroup") String dubboGroup,
-            @RequestParam("registryAddress") String registryAddress) throws Exception {
+            @RequestParam("registryAddress") String registryAddress,
+            @RequestParam("input") String input
+    ) throws Exception {
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("Content-Type", "application/json; charset=utf-8");
@@ -42,7 +48,33 @@ public class DubboTestController {
                 .dubboGroup(dubboGroup).registryProtocol(registryProtocol)
                 .build();
         List<String> methods = providerService.doParser(parserParam);
-        return new ResponseEntity<>(JsonUtils.toJson(methods), responseHeaders, HttpStatus.OK);
+
+
+        List<MethodArgumentAndValue> methodArgumentAndValues =
+                new ArrayList<MethodArgumentAndValue>() {{
+                    add(new MethodArgumentAndValue("String", input));
+                }};
+
+        DubboInterfaceInvokeParam invokeParam = DubboInterfaceInvokeParam.Builder.builder()
+                .dubboGroup(dubboGroup)
+                .zkAddress(registryAddress)
+                .interfaceName("com.hplegend.api.SimpleDubboTestApi")
+                .methodName("outputSimpleMessage")
+                .dubboGroup(dubboGroup)
+                .registryProtocol(registryProtocol)
+                .build();
+
+
+        DubboInterfaceParameters parameters = new DubboInterfaceParameters();
+        parameters.setInterfaceInvokeParam(invokeParam);
+        parameters.setMethodArgumentAndValueList(methodArgumentAndValues);
+
+        RemoteDubboCallService callService = new RemoteDubboCallService();
+        Object ret = callService.doCall(parameters);
+
+        System.out.println("ret: " + ret);
+
+        return new ResponseEntity<>(JsonUtils.toJson(ret), responseHeaders, HttpStatus.OK);
     }
 
 }

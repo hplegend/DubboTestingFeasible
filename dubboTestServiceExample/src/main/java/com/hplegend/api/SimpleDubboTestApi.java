@@ -7,6 +7,6 @@ package com.hplegend.api;
 public interface SimpleDubboTestApi {
 
 
-    String outputSimpleMessage();
+    String outputSimpleMessage(String input);
 
 }
