@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	    http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!--设置dubbo的生产者 -->
+
+    <!-- 设置dubbo的主体服务 -->
+    <dubbo:application name="vs_promote"/>
+
+    <!-- 设置服务发现的中心节点 -->
+    <dubbo:registry protocol="zookeeper" address="${zk_address}" group="${zk_group}" id="promote_registry"/>
+
+    <dubbo:protocol name="dubbo" port="-1"/>
+
+
+    <!-- 配置provider所在的注册中心, 指定服务提供者的负载均衡策略 delay -1代表等spring启动后再暴露服务-->
+    <dubbo:provider registry="promote_registry" cluster="failfast" threads="500" threadpool="fixed" loadbalance="random"
+                    delay="-1">
+        <dubbo:parameter key="qloglevel" value="10"/>
+        <dubbo:parameter key="server" value="netty4"/>
+        <!--因为考虑client不会同时升级，兼容netty3，不然会出异常-->
+        <dubbo:parameter key="client" value="netty"/>
+    </dubbo:provider>
+
+    <!--配置接口-->
+
+    <dubbo:service interface="com.hplegend.api.SimpleDubboTestApi"
+                   ref="simpleDubboTestApiService" version="1.0.0" timeout="50000"/>
+</beans>

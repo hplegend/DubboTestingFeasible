@@ -11,6 +11,7 @@
   <modules>
     <module>dubboTestCore</module>
     <module>dubboTestWeb</module>
+    <module>dubboTestServiceExample</module>
   </modules>
   <packaging>pom</packaging>
 
