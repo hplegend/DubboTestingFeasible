@@ -44,7 +44,7 @@ public class DubboCallService {
         // get registry protocol
         String protocol = "zookeeper";
         // get registry group
-        String registryGroup = "/vs/promotion/hp/djtts5dev";
+        String registryGroup = "";
         switch (protocol) {
             case Constants.REGISTRY_ZOOKEEPER:
                 registry = new RegistryConfig();
