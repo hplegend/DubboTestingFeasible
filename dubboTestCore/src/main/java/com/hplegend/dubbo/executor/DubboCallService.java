@@ -26,7 +26,7 @@ public class DubboCallService {
     private static final Logger log = LoggerFactory.getLogger("dfsd");
     public static ApplicationConfig application = new ApplicationConfig("hplegendDubboTest");
 
-    String zkAd = "zk.beta.corp.qunar.com:2181";
+    String zkAd = "";
 
     public Object callDubbo() {
         // This instance is heavy, encapsulating the connection to the registry and the connection to the provider,
@@ -81,7 +81,7 @@ public class DubboCallService {
                 StringBuffer sb = new StringBuffer();
                 sb.append(protocol)
                         .append(address)
-                        .append("/").append("com.qunar.vacation.promotion.cash.api.IOperateCashService");
+                        .append("/").append("dobbMethodName");
                 //# fix dubbo 2.7.3 Generic bug https://github.com/apache/dubbo/pull/4787
                 String version = "1.0.0";
                 if (!StringUtils.isBlank(version)) {
@@ -92,7 +92,7 @@ public class DubboCallService {
         }
         try {
             // set interface
-            String interfaceName = "com.qunar.vacation.promotion.cash.api.IOperateCashService";
+            String interfaceName = "dobbMethodName";
             if (StringUtils.isBlank(interfaceName)) {
                 return null;
             }

@@ -35,7 +35,7 @@ public class RemoteDubboInterfaceAndMethodParser {
     private static final Logger log = LoggerFactory.getLogger("dfsd");
     public static ApplicationConfig application = new ApplicationConfig("hplegendDubboTest");
     ConcurrentMap<String, Map<String, URL>> providerUrls = null;
-    String zkAd = "zk.beta.corp.qunar.com:2181";
+    String zkAd = "";
 
     public List<String> doParser(RemoteParserParam parserParam) throws Exception {
         ReferenceConfig reference = new ReferenceConfig();
