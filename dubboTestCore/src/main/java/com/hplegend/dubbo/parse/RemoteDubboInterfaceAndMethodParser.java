@@ -1,5 +1,6 @@
 package com.hplegend.dubbo.parse;
 
+import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.hplegend.dubbo.common.MethodArgument;
 import com.hplegend.dubbo.common.RegistryServerSync;
@@ -89,7 +90,19 @@ public class RemoteDubboInterfaceAndMethodParser {
             List<String> interfaceAndMethodExpand = Lists.newArrayList();
             for (Map.Entry<String, Map<String, URL>> entry : providerUrls.entrySet()) {
                 for (Map.Entry<String, URL> innerEntry : entry.getValue().entrySet()) {
-                    interfaceAndMethodExpand.add(entry.getKey() + "*" + innerEntry.getValue().getParameter(com.alibaba.dubbo.common.Constants.METHODS_KEY));
+
+                    String methods = innerEntry.getValue().getParameter(com.alibaba.dubbo.common.Constants.METHODS_KEY);
+
+                    if (null == methods && methods.length() <= 0) {
+                        continue;
+                    }
+
+                    List<String> methodList = Splitter.on(",").splitToList(methods);
+                    methodList.forEach(
+                            varMethod -> {
+                                interfaceAndMethodExpand.add(entry.getKey() + "--->" + varMethod);
+                            }
+                    );
                 }
             }
             return interfaceAndMethodExpand;

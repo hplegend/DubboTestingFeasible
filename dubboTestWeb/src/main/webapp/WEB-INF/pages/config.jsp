@@ -171,7 +171,7 @@
 
 
 <div class="input_bo" id="returnResultDiv">
-    <h4 class="h4">红包消费日志</h4>
+    <h4 class="h4">结果输出</h4>
     <div id="returnResult" class="result"></div>
 </div>
 
