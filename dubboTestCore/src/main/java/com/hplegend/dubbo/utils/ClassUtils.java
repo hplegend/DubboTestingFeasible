@@ -212,6 +212,9 @@ public class ClassUtils {
                     // 对于类类型, 类型和jsonString。系统里面负责解析。
                     try {
                         // List<Object>，会转换成List LinkedHashMap，对象全部被转换成了HashMap的key-value结构
+
+                        // 子定义类加载器
+                        // 支持 classPath 配置
                         Class<?> clazz = Class.forName(className);
                         paramterTypeList.add(arg.getMethodType());
                         parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), clazz));
@@ -220,7 +223,7 @@ public class ClassUtils {
                         paramterTypeList.add(arg.getMethodType());
                         Object obj = null;
                         if (!StringUtils.isBlank(arg.getMethodValue())) {
-                            //使用通用map格式反序列化值
+                            // 使用通用map格式反序列化值
                             obj = JsonUtils.formJson(arg.getMethodValue(), new TypeToken<HashMap<String, Object>>() {
                             }.getType());
                             if (obj == null) {
