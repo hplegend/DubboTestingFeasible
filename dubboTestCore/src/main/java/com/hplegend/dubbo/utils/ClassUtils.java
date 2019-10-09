@@ -183,6 +183,7 @@ public class ClassUtils {
                 paramterTypeList.add("java.lang.Boolean[]");
                 parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<Boolean[]>() {}.getType()));
             } else {
+                // 对于数组类型
                 if (className.endsWith("[]")) {
                     List<?> list = null;
                     if (!StringUtils.isBlank(arg.getMethodValue())) {
@@ -191,6 +192,7 @@ public class ClassUtils {
                     paramterTypeList.add(arg.getMethodType());
                     parameterValuesList.add(list == null ? null : list.toArray());
                 } else {
+                    // 对于类类型, 类型和jsonString。系统里面负责解析。
                     try {
                         Class<?> clazz = Class.forName(className);
                         paramterTypeList.add(arg.getMethodType());

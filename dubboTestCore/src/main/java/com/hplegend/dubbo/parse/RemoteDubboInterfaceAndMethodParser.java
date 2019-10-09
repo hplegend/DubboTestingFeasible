@@ -52,12 +52,14 @@ public class RemoteDubboInterfaceAndMethodParser {
                 registry.setGroup(group);
                 registry.setAddress(address);
                 reference.setRegistry(registry);
+                reference.setVersion("2.0.0");
                 break;
             case Constants.REGISTRY_REDIS:
                 registry.setProtocol(Constants.REGISTRY_REDIS);
                 registry.setGroup(group);
                 registry.setAddress(address);
                 reference.setRegistry(registry);
+                reference.setVersion("2.0.0");
                 break;
             default:
                 throw new Exception("不支持的分布式注册协议");

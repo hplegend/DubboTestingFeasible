@@ -36,12 +36,12 @@ public class DubboTestController {
             @RequestParam("registryProtocol") String registryProtocol,
             @RequestParam("dubboGroup") String dubboGroup,
             @RequestParam("registryAddress") String registryAddress,
-            @RequestParam("input") String input
-    ) throws Exception {
+            @RequestParam("input") String input) throws Exception {
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("Content-Type", "application/json; charset=utf-8");
 
+         // 接口解析
         RemoteDubboInterfaceAndMethodParser providerService = new RemoteDubboInterfaceAndMethodParser();
         RemoteParserParam parserParam = RemoteParserParam.Builder.builder()
                 .zkAddress(registryAddress)
@@ -52,23 +52,32 @@ public class DubboTestController {
 
         List<MethodArgumentAndValue> methodArgumentAndValues =
                 new ArrayList<MethodArgumentAndValue>() {{
-                    add(new MethodArgumentAndValue("String", input));
+                    add(new MethodArgumentAndValue("Integer", input));
                 }};
 
-        DubboInterfaceInvokeParam invokeParam = DubboInterfaceInvokeParam.Builder.builder()
+  /*      DubboInterfaceInvokeParam invokeParam = DubboInterfaceInvokeParam.Builder.builder()
                 .dubboGroup(dubboGroup)
                 .zkAddress(registryAddress)
                 .interfaceName("com.hplegend.api.SimpleDubboTestApi")
                 .methodName("outputSimpleMessage")
                 .dubboGroup(dubboGroup)
                 .registryProtocol(registryProtocol)
-                .build();
+                .build();*/
 
+        DubboInterfaceInvokeParam invokeParam = DubboInterfaceInvokeParam.Builder.builder()
+                .dubboGroup(dubboGroup)
+                .zkAddress(registryAddress)
+                .interfaceName("com.qunar.vacation.rate.gateway.api.label.CommentLabelService")
+                .methodName("outputSimpleMessage")
+                .dubboGroup(dubboGroup)
+                .registryProtocol(registryProtocol)
+                .build();
 
         DubboInterfaceParameters parameters = new DubboInterfaceParameters();
         parameters.setInterfaceInvokeParam(invokeParam);
         parameters.setMethodArgumentAndValueList(methodArgumentAndValues);
 
+        // 接口调用
         RemoteDubboCallService callService = new RemoteDubboCallService();
         Object ret = callService.doCall(parameters);
 
