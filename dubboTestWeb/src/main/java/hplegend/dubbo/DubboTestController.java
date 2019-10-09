@@ -52,26 +52,26 @@ public class DubboTestController {
 
         List<MethodArgumentAndValue> methodArgumentAndValues =
                 new ArrayList<MethodArgumentAndValue>() {{
-                    add(new MethodArgumentAndValue("Integer", input));
+                    add(new MethodArgumentAndValue("java.util.List", "[{\"userName\":\"sdf\",\"nickName\":\"sdfsdfsdfsd\"},{\"userName\":\"sdf\",\"nickName\":\"sdfsdfsdfsd\"}]"));
                 }};
 
-  /*      DubboInterfaceInvokeParam invokeParam = DubboInterfaceInvokeParam.Builder.builder()
+        DubboInterfaceInvokeParam invokeParam = DubboInterfaceInvokeParam.Builder.builder()
                 .dubboGroup(dubboGroup)
                 .zkAddress(registryAddress)
                 .interfaceName("com.hplegend.api.SimpleDubboTestApi")
-                .methodName("outputSimpleMessage")
+                .methodName("doTestBeanParameter")
                 .dubboGroup(dubboGroup)
                 .registryProtocol(registryProtocol)
-                .build();*/
+                .build();
 
-        DubboInterfaceInvokeParam invokeParam = DubboInterfaceInvokeParam.Builder.builder()
+    /*    DubboInterfaceInvokeParam invokeParam = DubboInterfaceInvokeParam.Builder.builder()
                 .dubboGroup(dubboGroup)
                 .zkAddress(registryAddress)
                 .interfaceName("com.qunar.vacation.rate.gateway.api.label.CommentLabelService")
                 .methodName("outputSimpleMessage")
                 .dubboGroup(dubboGroup)
                 .registryProtocol(registryProtocol)
-                .build();
+                .build();*/
 
         DubboInterfaceParameters parameters = new DubboInterfaceParameters();
         parameters.setInterfaceInvokeParam(invokeParam);

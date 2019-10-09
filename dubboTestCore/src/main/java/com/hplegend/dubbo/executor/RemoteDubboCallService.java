@@ -51,7 +51,7 @@ public class RemoteDubboCallService {
         reference.setInterface(interfaceName);
         reference.setRetries(3);
         reference.setCluster("failfast");
-        reference.setVersion("1.0.0");
+        reference.setVersion("2.0.0");
         reference.setTimeout(30000);
         // 服务的分组，而不是
         reference.setGroup("");

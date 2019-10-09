@@ -28,7 +28,6 @@
     </dubbo:provider>
 
     <!--配置接口-->
-
     <dubbo:service interface="com.hplegend.api.SimpleDubboTestApi"
                    ref="simpleDubboTestApiService" version="2.0.0" timeout="50000"/>
 </beans>

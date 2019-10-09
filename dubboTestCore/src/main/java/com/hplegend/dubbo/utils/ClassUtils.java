@@ -69,51 +69,59 @@ public class ClassUtils {
             if ("int".equals(className)) {
                 paramterTypeList.add(arg.getMethodType());
                 parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.INT_DEFAULT : Integer.parseInt(arg.getMethodValue()));
-            } else if("int[]".equals(className)) {
+            } else if ("int[]".equals(className)) {
                 paramterTypeList.add(arg.getMethodType());
-                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.INT_ARRAY_DEFAULT : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<int[]>() {}.getType()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.INT_ARRAY_DEFAULT : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<int[]>() {
+                }.getType()));
             } else if ("double".equals(className)) {
                 paramterTypeList.add(arg.getMethodType());
                 parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.DOUBLE_DEFAULT : Double.parseDouble(arg.getMethodValue()));
-            }  else if ("double[]".equals(className)) {
+            } else if ("double[]".equals(className)) {
                 paramterTypeList.add(arg.getMethodType());
-                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.DOUBLE_ARRAY_DEFAULT : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<double[]>() {}.getType()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.DOUBLE_ARRAY_DEFAULT : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<double[]>() {
+                }.getType()));
             } else if ("short".equals(className)) {
                 paramterTypeList.add(arg.getMethodType());
                 parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.SHORT_DEFAULT : Short.parseShort(arg.getMethodValue()));
             } else if ("short[]".equals(className)) {
                 paramterTypeList.add(arg.getMethodType());
-                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.SHORT_ARRAY_DEFAULT : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<short[]>() {}.getType()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.SHORT_ARRAY_DEFAULT : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<short[]>() {
+                }.getType()));
             } else if ("float".equals(className)) {
                 paramterTypeList.add(arg.getMethodType());
                 parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.FLOAT_DEFAULT : Float.parseFloat(arg.getMethodValue()));
             } else if ("float[]".equals(className)) {
                 paramterTypeList.add(arg.getMethodType());
-                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.FLOAT_ARRAY_DEFAULT : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<float[]>() {}.getType()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.FLOAT_ARRAY_DEFAULT : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<float[]>() {
+                }.getType()));
             } else if ("long".equals(className)) {
                 paramterTypeList.add(arg.getMethodType());
                 parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.LONG_DEFAULT : Long.parseLong(arg.getMethodValue()));
             } else if ("long[]".equals(className)) {
                 paramterTypeList.add(arg.getMethodType());
-                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.LONG_ARRAY_DEFAULT : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<long[]>() {}.getType()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.LONG_ARRAY_DEFAULT : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<long[]>() {
+                }.getType()));
             } else if ("byte".equals(className)) {
                 paramterTypeList.add(arg.getMethodType());
                 parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.BYTE_DEFAULT : Byte.parseByte(arg.getMethodValue()));
             } else if ("byte[]".equals(className)) {
                 paramterTypeList.add(arg.getMethodType());
-                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.BYTE_ARRAY_DEFAULT : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<byte[]>() {}.getType()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.BYTE_ARRAY_DEFAULT : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<byte[]>() {
+                }.getType()));
             } else if ("boolean".equals(className)) {
                 paramterTypeList.add(arg.getMethodType());
                 parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.BOOLEAN_DEFAULT : Boolean.parseBoolean(arg.getMethodValue()));
             } else if ("boolean[]".equals(className)) {
                 paramterTypeList.add(arg.getMethodType());
-                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.BOOLEAN_ARRAY_DEFAULT : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<boolean[]>() {}.getType()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.BOOLEAN_ARRAY_DEFAULT : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<boolean[]>() {
+                }.getType()));
             } else if ("char".equals(className)) {
                 paramterTypeList.add(arg.getMethodType());
                 parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.CHAR_DEFAULT : arg.getMethodValue().charAt(0));
             } else if ("char[]".equals(className)) {
                 paramterTypeList.add(arg.getMethodType());
-                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.CHAT_ARRAY_DEFAULT : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<char[]>() {}.getType()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? Constants.CHAT_ARRAY_DEFAULT : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<char[]>() {
+                }.getType()));
             } else if ("java.lang.String".equals(className)
                     || "String".equals(className)
                     || "string".equals(className)) {
@@ -123,7 +131,8 @@ public class ClassUtils {
                     || "String[]".equals(className)
                     || "string[]".equals(className)) {
                 paramterTypeList.add("java.lang.String[]");
-                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<String[]>() {}.getType()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<String[]>() {
+                }.getType()));
             } else if ("java.lang.Integer".equals(className)
                     || "Integer".equals(className)
                     || "integer".equals(className)) {
@@ -133,7 +142,8 @@ public class ClassUtils {
                     || "Integer[]".equals(className)
                     || "integer[]".equals(className)) {
                 paramterTypeList.add("java.lang.Integer[]");
-                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<Integer[]>() {}.getType()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<Integer[]>() {
+                }.getType()));
             } else if ("java.lang.Double".equals(className)
                     || "Double".equals(className)) {
                 paramterTypeList.add("java.lang.Double");
@@ -141,7 +151,8 @@ public class ClassUtils {
             } else if ("java.lang.Double[]".equals(className)
                     || "Double[]".equals(className)) {
                 paramterTypeList.add("java.lang.Double[]");
-                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<Double[]>() {}.getType()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<Double[]>() {
+                }.getType()));
             } else if ("java.lang.Short".equals(className)
                     || "Short".equals(className)) {
                 paramterTypeList.add("java.lang.Short");
@@ -149,15 +160,17 @@ public class ClassUtils {
             } else if ("java.lang.Short[]".equals(className)
                     || "Short[]".equals(className)) {
                 paramterTypeList.add("java.lang.Short[]");
-                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<Short[]>() {}.getType()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<Short[]>() {
+                }.getType()));
             } else if ("java.lang.Long".equals(className)
                     || "Long".equals(className)) {
                 paramterTypeList.add("java.lang.Long");
                 parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : Long.valueOf(arg.getMethodValue()));
-            } else if("java.lang.Long[]".equals(className)
+            } else if ("java.lang.Long[]".equals(className)
                     || "Long[]".equals(className)) {
                 paramterTypeList.add("java.lang.Long[]");
-                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<Long[]>() {}.getType()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<Long[]>() {
+                }.getType()));
             } else if ("java.lang.Float".equals(className)
                     || "Float".equals(className)) {
                 paramterTypeList.add("java.lang.Float");
@@ -165,7 +178,8 @@ public class ClassUtils {
             } else if ("java.lang.Float[]".equals(className)
                     || "Float[]".equals(className)) {
                 paramterTypeList.add("java.lang.Float[]");
-                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<Float[]>() {}.getType()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<Float[]>() {
+                }.getType()));
             } else if ("java.lang.Byte".equals(className)
                     || "Byte".equals(className)) {
                 paramterTypeList.add("java.lang.Byte");
@@ -173,7 +187,8 @@ public class ClassUtils {
             } else if ("java.lang.Byte[]".equals(className)
                     || "Byte[]".equals(className)) {
                 paramterTypeList.add("java.lang.Byte[]");
-                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<Byte[]>() {}.getType()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<Byte[]>() {
+                }.getType()));
             } else if ("java.lang.Boolean".equals(className)
                     || "Boolean".equals(className)) {
                 paramterTypeList.add("java.lang.Boolean");
@@ -181,31 +196,34 @@ public class ClassUtils {
             } else if ("java.lang.Boolean[]".equals(className)
                     || "Boolean[]".equals(className)) {
                 paramterTypeList.add("java.lang.Boolean[]");
-                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<Boolean[]>() {}.getType()));
+                parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), new TypeToken<Boolean[]>() {
+                }.getType()));
             } else {
                 // 对于数组类型
                 if (className.endsWith("[]")) {
                     List<?> list = null;
                     if (!StringUtils.isBlank(arg.getMethodValue())) {
-                        list = JsonUtils.formJson(arg.getMethodValue(), new TypeToken<List<?>>() {}.getType());
+                        list = JsonUtils.formJson(arg.getMethodValue(), new TypeToken<List<?>>() {
+                        }.getType());
                     }
                     paramterTypeList.add(arg.getMethodType());
                     parameterValuesList.add(list == null ? null : list.toArray());
                 } else {
                     // 对于类类型, 类型和jsonString。系统里面负责解析。
                     try {
+                        // List<Object>，会转换成List LinkedHashMap，对象全部被转换成了HashMap的key-value结构
                         Class<?> clazz = Class.forName(className);
                         paramterTypeList.add(arg.getMethodType());
                         parameterValuesList.add(StringUtils.isBlank(arg.getMethodValue()) ? null : JsonUtils.formJson(arg.getMethodValue(), clazz));
                     } catch (ClassNotFoundException e) {
-                        //不是jdk或者lib下的类，使用通用map格式反序列化值
+                        // 不是jdk或者lib下的类，使用通用map格式反序列化值
                         paramterTypeList.add(arg.getMethodType());
                         Object obj = null;
                         if (!StringUtils.isBlank(arg.getMethodValue())) {
                             //使用通用map格式反序列化值
-                            obj = JsonUtils.formJson(arg.getMethodValue(), new TypeToken<HashMap<String, Object>>() {}.getType());
+                            obj = JsonUtils.formJson(arg.getMethodValue(), new TypeToken<HashMap<String, Object>>() {
+                            }.getType());
                             if (obj == null) {
-                                //枚举类型的类走字符串序列化
                                 obj = JsonUtils.formJson(arg.getMethodValue(), String.class);
                             }
                         }
@@ -214,7 +232,7 @@ public class ClassUtils {
                 }
             }
         } catch (Exception e) {
-            throw new IllegalArgumentException("Invalid parameter => [ParamType="+arg.getMethodValue()+",ParamValue="+arg.getMethodValue()+"]", e);
+            throw new IllegalArgumentException("Invalid parameter => [ParamType=" + arg.getMethodValue() + ",ParamValue=" + arg.getMethodValue() + "]", e);
         }
     }
 }
