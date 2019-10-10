@@ -1,5 +1,7 @@
 package hplegend.dubbo;
 
+import com.google.common.collect.Lists;
+import com.google.common.reflect.TypeToken;
 import com.hplegend.dubbo.common.DubboInterfaceInvokeParam;
 import com.hplegend.dubbo.common.DubboInterfaceParameters;
 import com.hplegend.dubbo.common.MethodArgumentAndValue;
@@ -17,7 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -112,7 +117,60 @@ public class DubboTestController {
         jsonData.setRet(true);
         jsonData.setData(methods);
 
+        return new ResponseEntity<>(JsonUtils.toJson(jsonData), responseHeaders, HttpStatus.OK);
+    }
 
+
+    @RequestMapping("/dubbo/method/callService.json")
+    @ResponseBody
+    public ResponseEntity<String> callService(
+            @RequestParam("registryProtocol") String registryProtocol,
+            @RequestParam("dubboGroup") String dubboGroup,
+            @RequestParam("registryAddress") String registryAddress,
+            @RequestParam("rpcProtocol") String rpcProtocol,
+            @RequestParam("interfaceName") String interfaceName,
+            @RequestParam("methodName") String methodName,
+            @RequestParam(value = "serviceVersion", required = false, defaultValue = "1.0.0") String serviceVersion,
+            @RequestParam(value = "serviceGroup", required = false,defaultValue = "") String serviceGroup,
+            HttpServletRequest request
+    ) throws Exception {
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("Content-Type", "application/json; charset=utf-8");
+
+        String[] parameterTypes = request.getParameterValues("parameterTypes");
+        String[] parameterValues = request.getParameterValues("parameterValues");
+
+        List<MethodArgumentAndValue> methodArgumentAndValues = Lists.newArrayList();
+
+        for (int index = 0; index < parameterTypes.length; ++index) {
+            methodArgumentAndValues.add(new MethodArgumentAndValue(parameterTypes[index], parameterValues[index]));
+        }
+
+
+        DubboInterfaceInvokeParam invokeParam = DubboInterfaceInvokeParam.Builder.builder()
+                .dubboGroup(dubboGroup)
+                .zkAddress(registryAddress)
+                .interfaceName(interfaceName)
+                .methodName(methodName)
+                .dubboGroup(dubboGroup)
+                .registryProtocol(registryProtocol)
+                .serviceGroup(serviceGroup)
+                .serviceVersion(serviceVersion)
+                .build();
+
+        DubboInterfaceParameters parameters = new DubboInterfaceParameters();
+        parameters.setInterfaceInvokeParam(invokeParam);
+        parameters.setMethodArgumentAndValueList(methodArgumentAndValues);
+
+        // 接口调用
+        RemoteDubboCallService callService = new RemoteDubboCallService();
+        Object ret = callService.doCall(parameters);
+
+        System.out.println("ret: " + ret);
+        JsonData jsonData = new JsonData();
+        jsonData.setRet(true);
+        jsonData.setData(JsonUtils.toJson(ret));
         return new ResponseEntity<>(JsonUtils.toJson(jsonData), responseHeaders, HttpStatus.OK);
     }
 
@@ -121,6 +179,13 @@ public class DubboTestController {
     public ModelAndView config() {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("config");
+        return mv;
+    }
+
+    @RequestMapping("/dubbo/callConfig.page")
+    public ModelAndView callConfig() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("dubboCall");
         return mv;
     }
 

@@ -19,6 +19,19 @@ public class DubboInterfaceInvokeParam {
 
     private String dubboVersion;
 
+    private String serviceVersion;
+
+    private String serviceGroup;
+
+
+    public String getServiceVersion() {
+        return serviceVersion;
+    }
+
+
+    public String getServiceGroup() {
+        return serviceGroup;
+    }
 
 
     public String getZkAddress() {
@@ -46,7 +59,6 @@ public class DubboInterfaceInvokeParam {
     }
 
 
-
     public static class Builder {
 
         private String zkAddress;
@@ -60,6 +72,10 @@ public class DubboInterfaceInvokeParam {
         private String methodName;
 
         private String dubboVersion;
+
+        private String serviceVersion;
+
+        private String serviceGroup;
 
         private Builder() {
 
@@ -100,6 +116,17 @@ public class DubboInterfaceInvokeParam {
             return this;
         }
 
+        public Builder serviceGroup(String serviceGroup) {
+            this.serviceGroup = serviceGroup;
+            return this;
+        }
+
+
+        public Builder serviceVersion(String serviceVersion) {
+            this.serviceVersion = serviceVersion;
+            return this;
+        }
+
 
         public DubboInterfaceInvokeParam build() {
             DubboInterfaceInvokeParam var = new DubboInterfaceInvokeParam();
@@ -109,6 +136,8 @@ public class DubboInterfaceInvokeParam {
             var.interfaceName = interfaceName;
             var.methodName = methodName;
             var.registryProtocol = registryProtocol;
+            var.serviceGroup = serviceGroup;
+            var.serviceVersion = serviceVersion;
 
             return var;
         }

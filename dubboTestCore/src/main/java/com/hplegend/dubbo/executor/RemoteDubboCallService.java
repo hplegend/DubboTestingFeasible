@@ -32,6 +32,8 @@ public class RemoteDubboCallService {
         String dubboGroup = parameters.getInterfaceInvokeParam().getDubboGroup();
         String registryProtocol = parameters.getInterfaceInvokeParam().getRegistryProtocol();
         String rpcProtocol = "dubbo";
+        String serviceVersion = parameters.getInterfaceInvokeParam().getServiceVersion();
+        String serviceGroup = parameters.getInterfaceInvokeParam().getServiceGroup();
 
         String interfaceName = parameters.getInterfaceInvokeParam().getInterfaceName();
         String methodName = parameters.getInterfaceInvokeParam().getMethodName();
@@ -51,10 +53,10 @@ public class RemoteDubboCallService {
         reference.setInterface(interfaceName);
         reference.setRetries(3);
         reference.setCluster("failfast");
-        reference.setVersion("2.0.0");
+        reference.setVersion(serviceVersion);
         reference.setTimeout(30000);
         // 服务的分组，而不是
-        reference.setGroup("");
+        reference.setGroup(serviceGroup);
         reference.setConnections(10);
         reference.setLoadbalance("random");
 
@@ -92,7 +94,6 @@ public class RemoteDubboCallService {
         Object[] parameterValues = parameterValuesList.toArray(new Object[parameterValuesList.size()]);
 
         Object result = genericService.$invoke(methodName, parameterTypes, parameterValues);
-
 
         return result;
     }
