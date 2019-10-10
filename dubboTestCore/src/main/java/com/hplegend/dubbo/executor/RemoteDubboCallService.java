@@ -1,7 +1,7 @@
 package com.hplegend.dubbo.executor;
 
+import com.google.common.collect.Lists;
 import com.hplegend.dubbo.common.DubboInterfaceParameters;
-import com.hplegend.dubbo.common.MethodArgumentAndValue;
 import com.hplegend.dubbo.utils.ClassUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.ApplicationConfig;
@@ -10,7 +10,6 @@ import org.apache.dubbo.config.RegistryConfig;
 import org.apache.dubbo.config.utils.ReferenceConfigCache;
 import org.apache.dubbo.rpc.service.GenericService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,11 +20,10 @@ import java.util.List;
 @Slf4j
 public class RemoteDubboCallService {
 
-    public static ApplicationConfig application = new ApplicationConfig("hplegendDubboTest");
+    private final static ApplicationConfig application = new ApplicationConfig("hplegendDubboTest");
 
 
     public Object doCall(DubboInterfaceParameters parameters) {
-
 
         // parameters
         String zkAddress = parameters.getInterfaceInvokeParam().getZkAddress();
@@ -37,7 +35,6 @@ public class RemoteDubboCallService {
 
         String interfaceName = parameters.getInterfaceInvokeParam().getInterfaceName();
         String methodName = parameters.getInterfaceInvokeParam().getMethodName();
-
 
         // build registry
         RegistryConfig registry = new RegistryConfig();
@@ -55,13 +52,12 @@ public class RemoteDubboCallService {
         reference.setCluster("failfast");
         reference.setVersion(serviceVersion);
         reference.setTimeout(30000);
-        // 服务的分组，而不是
+        // service group, not dubbo registry group
         reference.setGroup(serviceGroup);
         reference.setConnections(10);
         reference.setLoadbalance("random");
 
-        // 是否开启异步
-        // 同步或者异步
+        // sync or async
         reference.setAsync(false);
         reference.setGeneric(true);
 
@@ -76,26 +72,24 @@ public class RemoteDubboCallService {
 
         GenericService genericService = (GenericService) cache.get(reference);
         if (genericService == null) {
-
             log.info("genericService error");
             return null;
         }
 
         // do invoke
-        List<String> paramterTypeList = new ArrayList<String>();
+        List<String> parameterTypeList = Lists.newArrayList();
+        List<Object> parameterValuesList = Lists.newArrayList();
 
-        List<Object> parameterValuesList = new ArrayList<Object>();
+        parameters.getMethodArgumentAndValueList().stream().forEach(
+                varParam ->
+                        ClassUtils.parseParameter(parameterTypeList, parameterValuesList, varParam)
+        );
 
-        for (MethodArgumentAndValue arg : parameters.getMethodArgumentAndValueList()) {
-            ClassUtils.parseParameter(paramterTypeList, parameterValuesList, arg);
-        }
 
-        String[] parameterTypes = paramterTypeList.toArray(new String[paramterTypeList.size()]);
+        String[] parameterTypes = parameterTypeList.toArray(new String[parameterTypeList.size()]);
         Object[] parameterValues = parameterValuesList.toArray(new Object[parameterValuesList.size()]);
 
-        Object result = genericService.$invoke(methodName, parameterTypes, parameterValues);
-
-        return result;
+        return genericService.$invoke(methodName, parameterTypes, parameterValues);
     }
 
 }

@@ -156,6 +156,23 @@
 </div>
 
 
+
+<div class="input_bo">
+    <h4 class="h4">dubbo service 参数配置</h4>
+    <table cellspacing="0" class="table" cellpadding="0" border="0">
+
+        <tr class="th">
+            <td class="title">serviceVersion:</td>
+            <td>
+                <input type="text" id="serviceVersion" name="serviceVersion" class="inputInfo">
+            </td>
+        </tr>
+
+    </table>
+</div>
+
+
+
 <div class="input_bo">
     <h4 class="h4">操作区</h4>
     <table cellspacing="0" class="table" cellpadding="0" border="0">

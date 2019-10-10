@@ -22,11 +22,12 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
 /**
- * 远程的dubbo解析解析
+ * dubbo parser service
  *
  * @author hp.he
  * @date 2019/9/27 19:16
@@ -34,9 +35,8 @@ import java.util.stream.Collectors;
 public class RemoteDubboInterfaceAndMethodParser {
 
     private static final Logger log = LoggerFactory.getLogger("dfsd");
-    public static ApplicationConfig application = new ApplicationConfig("hplegendDubboTest");
-    ConcurrentMap<String, Map<String, URL>> providerUrls = null;
-    String zkAd = "";
+    private static final ApplicationConfig application = new ApplicationConfig("hplegendDubboTest");
+    private ConcurrentMap<String, Map<String, URL>> providerUrls = new ConcurrentHashMap<>();
 
     public List<String> doParser(RemoteParserParam parserParam) throws Exception {
         ReferenceConfig reference = new ReferenceConfig();
@@ -45,6 +45,7 @@ public class RemoteDubboInterfaceAndMethodParser {
         String protocol = parserParam.getRegistryProtocol();
         String group = parserParam.getDubboGroup();
         String address = parserParam.getZkAddress();
+        String serviceVersion = parserParam.getServiceVersion();
 
         RegistryConfig registry = new RegistryConfig();
         switch (protocol) {
@@ -53,17 +54,17 @@ public class RemoteDubboInterfaceAndMethodParser {
                 registry.setGroup(group);
                 registry.setAddress(address);
                 reference.setRegistry(registry);
-                reference.setVersion("2.0.0");
+                reference.setVersion(serviceVersion);
                 break;
             case Constants.REGISTRY_REDIS:
                 registry.setProtocol(Constants.REGISTRY_REDIS);
                 registry.setGroup(group);
                 registry.setAddress(address);
                 reference.setRegistry(registry);
-                reference.setVersion("2.0.0");
+                reference.setVersion(serviceVersion);
                 break;
             default:
-                throw new Exception("不支持的分布式注册协议");
+                throw new Exception("protocol not support, please check!");
         }
         reference.setInterface("org.apache.dubbo.registry.RegistryService");
         try {
@@ -81,7 +82,7 @@ public class RemoteDubboInterfaceAndMethodParser {
             registryService.subscribe(RegistryServerSync.SUBSCRIBE, registryServerSync);
             List<String> ret = new ArrayList<String>();
 
-            // 这里返回的是在group上注册的所有方法，和参数
+            // return all registry interfaces and methods
             providerUrls = registryServerSync.getRegistryCache().get(com.alibaba.dubbo.common.Constants.PROVIDERS_CATEGORY);
             if (providerUrls != null) {
                 ret.addAll(providerUrls.keySet());
@@ -93,7 +94,7 @@ public class RemoteDubboInterfaceAndMethodParser {
 
                     String methods = innerEntry.getValue().getParameter(com.alibaba.dubbo.common.Constants.METHODS_KEY);
 
-                    if (null == methods && methods.length() <= 0) {
+                    if (null == methods || methods.length() <= 0) {
                         continue;
                     }
 

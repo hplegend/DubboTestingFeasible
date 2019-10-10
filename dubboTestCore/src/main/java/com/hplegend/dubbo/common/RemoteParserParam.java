@@ -17,7 +17,7 @@ public class RemoteParserParam {
 
     private String interfaceName;
 
-    private String dubboVersion;
+    private String serviceVersion;
 
     private RemoteParserParam() {
 
@@ -36,8 +36,7 @@ public class RemoteParserParam {
 
         private String interfaceName;
 
-        private String dubboVersion;
-
+        private String serviceVersion;
 
         private Builder() {
 
@@ -69,8 +68,8 @@ public class RemoteParserParam {
             return this;
         }
 
-        public Builder dubboVersion(String dubboVersion) {
-            this.dubboVersion = dubboVersion;
+        public Builder serviceVersion(String serviceVersion) {
+            this.serviceVersion = serviceVersion;
             return this;
         }
 
@@ -82,6 +81,7 @@ public class RemoteParserParam {
             var.registryProtocol = this.registryProtocol;
             var.interfaceName = this.interfaceName;
             var.dubboGroup = this.dubboGroup;
+            var.serviceVersion = this.serviceVersion;
 
             return var;
         }
@@ -103,11 +103,12 @@ public class RemoteParserParam {
     }
 
 
+    public String getServiceVersion() {
+        return serviceVersion;
+    }
+
     public String getInterfaceName() {
         return interfaceName;
     }
 
-    public String getDubboVersion() {
-        return dubboVersion;
-    }
 }

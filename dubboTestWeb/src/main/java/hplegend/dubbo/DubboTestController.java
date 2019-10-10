@@ -1,7 +1,6 @@
 package hplegend.dubbo;
 
 import com.google.common.collect.Lists;
-import com.google.common.reflect.TypeToken;
 import com.hplegend.dubbo.common.DubboInterfaceInvokeParam;
 import com.hplegend.dubbo.common.DubboInterfaceParameters;
 import com.hplegend.dubbo.common.MethodArgumentAndValue;
@@ -36,7 +35,9 @@ public class DubboTestController {
             @RequestParam("registryProtocol") String registryProtocol,
             @RequestParam("dubboGroup") String dubboGroup,
             @RequestParam("registryAddress") String registryAddress,
-            @RequestParam("rpcProtocol") String rpcProtocol) throws Exception {
+            @RequestParam("rpcProtocol") String rpcProtocol,
+            @RequestParam(value = "serviceVersion", required = false, defaultValue = "1.0.0") String serviceVersion)
+            throws Exception {
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("Content-Type", "application/json; charset=utf-8");
@@ -44,7 +45,9 @@ public class DubboTestController {
         RemoteDubboInterfaceAndMethodParser providerService = new RemoteDubboInterfaceAndMethodParser();
         RemoteParserParam parserParam = RemoteParserParam.Builder.builder()
                 .zkAddress(registryAddress)
-                .dubboGroup(dubboGroup).registryProtocol(registryProtocol)
+                .dubboGroup(dubboGroup)
+                .registryProtocol(registryProtocol)
+                .serviceVersion(serviceVersion)
                 .build();
         List<String> methods = providerService.doParser(parserParam);
 
@@ -81,7 +84,6 @@ public class DubboTestController {
         for (int index = 0; index < parameterTypes.length; ++index) {
             methodArgumentAndValues.add(new MethodArgumentAndValue(parameterTypes[index], parameterValues[index]));
         }
-
 
         DubboInterfaceInvokeParam invokeParam = DubboInterfaceInvokeParam.Builder.builder()
                 .dubboGroup(dubboGroup)
