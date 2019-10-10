@@ -112,14 +112,14 @@ public class DubboTestController {
     }
 
 
-    @RequestMapping("/dubbo/config.page")
+    @RequestMapping("/dubbo/serviceDiscover.page")
     public ModelAndView config() {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("config");
         return mv;
     }
 
-    @RequestMapping("/dubbo/callConfig.page")
+    @RequestMapping("/dubbo/serviceInvoke.page")
     public ModelAndView callConfig() {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("dubboCall");
