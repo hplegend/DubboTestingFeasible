@@ -14,7 +14,7 @@
     <style type="text/css">
         .input_bo {
             border: 1px solid #dcdcdc;
-            width: 900px;
+            width: 1200px;
             position: relative;
             margin-top: 60px;
             margin-left: 6px;
@@ -94,10 +94,12 @@
                 parameterTypes.push($(this).val());
             })
 
-            $("input[id='parameterValues']").each(function () {
+            $("textarea[id='parameterValues']").each(function () {
                 parameterValues.push($(this).val());
             })
 
+
+            alert(parameterValues);
 
             $.ajax({
                 type: 'post',
@@ -145,8 +147,8 @@
             var xh = document.createElement("td");
             var xm = document.createElement("td");
 
-            xh.innerHTML = "<input id='parameterTypes' name ='parameterTypes' type='text' />";
-            xm.innerHTML = "<input   id='parameterValues' name ='parameterValues' type='text' style='width:400px; height:200px;' />";
+            xh.innerHTML = "<input id='parameterTypes' name ='parameterTypes' type='text' style='width:500px; height:40px;' />";
+            xm.innerHTML = "<textarea  id='parameterValues' name ='parameterValues' cols='40' rows='10'> </textarea>";
             var del = document.createElement("td");
             del.innerHTML = "<a href='javascript:;' onclick='parameterRowDel(this)' >删除</a>";
             var tab = document.getElementById("parameterTable");
@@ -263,7 +265,7 @@
     <table cellspacing="0" class="table" cellpadding="0" border="0">
         <tr class="th">
             <td colspan="2" class="btn">
-                <input type="button" name="search" value="开始发现服务和接口" onclick="beginDubboCallService()"/>
+                <input type="button" name="search" value="开始调用服务" onclick="beginDubboCallService()"/>
             </td>
         </tr>
 

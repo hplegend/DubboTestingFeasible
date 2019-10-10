@@ -20,9 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -32,58 +29,6 @@ import java.util.List;
 
 @Controller
 public class DubboTestController {
-
-
-    String zkAd = "";
-
-
-    @RequestMapping("/dubbo/method/list.json")
-    @ResponseBody
-    public ResponseEntity<String> dubboMethodList(
-            @RequestParam("registryProtocol") String registryProtocol,
-            @RequestParam("dubboGroup") String dubboGroup,
-            @RequestParam("registryAddress") String registryAddress,
-            @RequestParam("input") String input) throws Exception {
-
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.add("Content-Type", "application/json; charset=utf-8");
-
-        // 接口解析
-        RemoteDubboInterfaceAndMethodParser providerService = new RemoteDubboInterfaceAndMethodParser();
-        RemoteParserParam parserParam = RemoteParserParam.Builder.builder()
-                .zkAddress(registryAddress)
-                .dubboGroup(dubboGroup).registryProtocol(registryProtocol)
-                .build();
-        List<String> methods = providerService.doParser(parserParam);
-
-
-        List<MethodArgumentAndValue> methodArgumentAndValues =
-                new ArrayList<MethodArgumentAndValue>() {{
-                    add(new MethodArgumentAndValue("java.util.List", "[{\"userName\":\"sdf\",\"nickName\":\"sdfsdfsdfsd\"},{\"userName\":\"sdf\",\"nickName\":\"sdfsdfsdfsd\"}]"));
-                }};
-
-        DubboInterfaceInvokeParam invokeParam = DubboInterfaceInvokeParam.Builder.builder()
-                .dubboGroup(dubboGroup)
-                .zkAddress(registryAddress)
-                .interfaceName("com.hplegend.api.SimpleDubboTestApi")
-                .methodName("doTestBeanParameter")
-                .dubboGroup(dubboGroup)
-                .registryProtocol(registryProtocol)
-                .build();
-
-        DubboInterfaceParameters parameters = new DubboInterfaceParameters();
-        parameters.setInterfaceInvokeParam(invokeParam);
-        parameters.setMethodArgumentAndValueList(methodArgumentAndValues);
-
-        // 接口调用
-        RemoteDubboCallService callService = new RemoteDubboCallService();
-        Object ret = callService.doCall(parameters);
-
-        System.out.println("ret: " + ret);
-
-        return new ResponseEntity<>(JsonUtils.toJson(ret), responseHeaders, HttpStatus.OK);
-    }
-
 
     @RequestMapping("/dubbo/method/listMethods.json")
     @ResponseBody
@@ -123,8 +68,7 @@ public class DubboTestController {
             @RequestParam("methodName") String methodName,
             @RequestParam(value = "serviceVersion", required = false, defaultValue = "1.0.0") String serviceVersion,
             @RequestParam(value = "serviceGroup", required = false, defaultValue = "") String serviceGroup,
-            HttpServletRequest request
-    ) throws Exception {
+            HttpServletRequest request) {
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("Content-Type", "application/json; charset=utf-8");
