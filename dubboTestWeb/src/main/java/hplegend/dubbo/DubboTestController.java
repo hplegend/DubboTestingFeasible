@@ -71,15 +71,6 @@ public class DubboTestController {
                 .registryProtocol(registryProtocol)
                 .build();
 
-    /*    DubboInterfaceInvokeParam invokeParam = DubboInterfaceInvokeParam.Builder.builder()
-                .dubboGroup(dubboGroup)
-                .zkAddress(registryAddress)
-                .interfaceName("com.qunar.vacation.rate.gateway.api.label.CommentLabelService")
-                .methodName("outputSimpleMessage")
-                .dubboGroup(dubboGroup)
-                .registryProtocol(registryProtocol)
-                .build();*/
-
         DubboInterfaceParameters parameters = new DubboInterfaceParameters();
         parameters.setInterfaceInvokeParam(invokeParam);
         parameters.setMethodArgumentAndValueList(methodArgumentAndValues);
@@ -131,7 +122,7 @@ public class DubboTestController {
             @RequestParam("interfaceName") String interfaceName,
             @RequestParam("methodName") String methodName,
             @RequestParam(value = "serviceVersion", required = false, defaultValue = "1.0.0") String serviceVersion,
-            @RequestParam(value = "serviceGroup", required = false,defaultValue = "") String serviceGroup,
+            @RequestParam(value = "serviceGroup", required = false, defaultValue = "") String serviceGroup,
             HttpServletRequest request
     ) throws Exception {
 
